@@ -1,0 +1,3 @@
+".\Objects\MovingAvg.obj" 
+TO ".\Objects\MovingAvg" 
+PRINT(".\Listings\MovingAvg.m51") RAMSIZE(256) 

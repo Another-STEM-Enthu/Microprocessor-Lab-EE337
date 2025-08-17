@@ -1,0 +1,207 @@
+C51 COMPILER V9.60.7.0   BOARDMANAGER                                                      04/08/2023 16:31:20 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE BOARDMANAGER
+OBJECT MODULE PLACED IN .\Objects\BoardManager.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE BoardManager.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\BoardManager.lst) TABS(2) OBJECT(.\Objects\BoardManager.obj)
+
+line level    source
+
+   1          /**********************************************************
+   2          EE337: ADC IC MCP3008 interfacing with pt-51
+   3          (1) Complete spi_init() function from spi.h 
+   4          
+   5          ***********************************************************/
+   6          
+   7          #include <at89c5131.h>
+   8          #include "lcd.h"                                        //Driver for interfacing lcd 
+   9          #include "serial.c"   
+  10          
+  11          char adc_ip_data_ascii[6]={0,0,0,0,0,'\0'};             //string array for saving ascii of input sample
+  12          code unsigned char menu[]="Press I for Issue and R for Return";               //Display msg on 2nd line of lcd
+  13          unsigned char status[30]="8051-8 TIVA-6 AT328-4 STM32-4";           //Display msg on 1st line of lcd
+  14          int quantity[5] = {0,8,6,4,4};
+  15          int quantity_max[5] = {0,8,6,4,4};
+  16          
+  17          
+  18          
+  19          void main(void)
+  20          {
+  21   1      
+  22   1        int j=0;
+  23   1        unsigned char inputt,index,number_borrow,number_return;
+  24   1        lcd_init();
+  25   1        uart_init();
+  26   1        
+  27   1        
+  28   1      
+  29   1           
+  30   1          
+  31   1          lcd_cmd(0x80);                                      //Move cursor to first line
+  32   1          lcd_write_string("Received Bits:");                     //Display "Volt: " on first line of lcd
+  33   1          
+  34   1        
+  35   1      while(1){   
+  36   2          transmit_string("\r\n");
+  37   2      
+  38   2          //to correctly display the #available boards
+  39   2          status[5] = quantity[1] + 48;
+  40   2          status[12] = quantity[2] + 48;
+  41   2          status[20] = quantity[3] + 48;
+  42   2          status[28] = quantity[4] + 48;
+  43   2      
+  44   2        
+  45   2          transmit_string(status);
+  46   2          transmit_string("\r\n");
+  47   2        
+  48   2          transmit_string(menu);
+  49   2          transmit_string("\r\n");
+  50   2        
+  51   2          
+  52   2          lcd_cmd(0xC0);
+  53   2          msdelay(4);
+  54   2          
+C51 COMPILER V9.60.7.0   BOARDMANAGER                                                      04/08/2023 16:31:20 PAGE 2   
+
+  55   2          while(1){
+  56   3          inputt = receive_char();
+  57   3          transmit_string("\r\n");
+  58   3          lcd_cmd(0xC0);
+  59   3          msdelay(4);
+  60   3          lcd_write_char(inputt);
+  61   3          msdelay(10);
+  62   3          goto outt;
+  63   3          }
+  64   2          
+  65   2          outt: if(inputt =='I' | inputt == 'i'){
+  66   3          transmit_string("Enter micro-controller to be borrowed:");
+  67   3          transmit_string("\r\n");
+  68   3            
+  69   3          while(1){
+  70   4          index = receive_char();
+  71   4          transmit_string("\r\n");
+  72   4          lcd_cmd(0xC0);
+  73   4          msdelay(4);
+  74   4          lcd_write_char(inputt);
+  75   4          msdelay(10);
+  76   4          goto borrow;
+  77   4          }
+  78   3          
+  79   3          borrow: transmit_string("Enter Quantity:");
+  80   3          transmit_string("\r\n");
+  81   3          
+  82   3          while(1){
+  83   4          number_borrow = receive_char();
+  84   4          transmit_string("\r\n");
+  85   4          lcd_cmd(0xC0);
+  86   4          msdelay(4);
+  87   4          lcd_write_char(inputt);
+  88   4          msdelay(10);
+  89   4          goto process_borrow;
+  90   4          }
+  91   3          
+  92   3          process_borrow: 
+  93   3            if((number_borrow- 48) <= quantity[index-48]){
+  94   4              quantity[index-48] = quantity[index-48] - (number_borrow - 48);
+  95   4              transmit_string("Requested micro-controller allocated!");
+  96   4              transmit_string("\r\n");
+  97   4            }
+  98   3            else{
+  99   4              transmit_string("Requested micro-controller not available...");
+ 100   4              transmit_string("\r\n");
+ 101   4            }
+ 102   3      
+ 103   3      
+ 104   3          
+ 105   3          }//ending issue if
+ 106   2      
+ 107   2      
+ 108   2          
+ 109   2          
+ 110   2          
+ 111   2          
+ 112   2          
+ 113   2          
+ 114   2          
+ 115   2          
+ 116   2          
+C51 COMPILER V9.60.7.0   BOARDMANAGER                                                      04/08/2023 16:31:20 PAGE 3   
+
+ 117   2          
+ 118   2          if(inputt =='R' | inputt == 'r'){
+ 119   3            transmit_string("Enter micro-controller to be returned:");
+ 120   3            transmit_string("\r\n");
+ 121   3          
+ 122   3            while(1){
+ 123   4            index = receive_char();
+ 124   4            transmit_string("\r\n");
+ 125   4            lcd_cmd(0xC0);
+ 126   4            msdelay(4);
+ 127   4            lcd_write_char(inputt);
+ 128   4            msdelay(10);
+ 129   4            goto returnn;
+ 130   4            }
+ 131   3            
+ 132   3            returnn: if(quantity[index-48] == quantity_max[index-48]){
+ 133   4            transmit_string("You can’t return what you don’t have...");
+ 134   4            transmit_string("\r\n");
+ 135   4            } //ending not possible to return wala if
+ 136   3            
+ 137   3            else{
+ 138   4            transmit_string("Enter Quantity:");
+ 139   4            transmit_string("\r\n");
+ 140   4            while(1){
+ 141   5            number_return = receive_char();
+ 142   5            transmit_string("\r\n");
+ 143   5            lcd_cmd(0xC0);
+ 144   5            msdelay(4);
+ 145   5            lcd_write_char(inputt);
+ 146   5            msdelay(10);
+ 147   5            goto process_return;
+ 148   5            }
+ 149   4            
+ 150   4            process_return: 
+ 151   4            if((number_return - 48) + (quantity[index-48]) <= quantity_max[index-48]){
+ 152   5            transmit_string("Returned micro-controller received!");
+ 153   5            transmit_string("\r\n");  
+ 154   5            quantity[index-48] = quantity[index-48] + (number_return-48);
+ 155   5            }
+ 156   4            else{
+ 157   5            transmit_string("Returned micro-controller out of bounds...");
+ 158   5            transmit_string("\r\n");        
+ 159   5            }
+ 160   4            
+ 161   4            } //ending possible to return wala else
+ 162   3          
+ 163   3          }//ending return if
+ 164   2          
+ 165   2          
+ 166   2          
+ 167   2        
+ 168   2          
+ 169   2          
+ 170   2          
+ 171   2          
+ 172   2          
+ 173   2      } //ending while(1)
+ 174   1          
+ 175   1      while(1);
+ 176   1      }
+ 177          
+
+C51 COMPILER V9.60.7.0   BOARDMANAGER                                                      04/08/2023 16:31:20 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    932    ----
+   CONSTANT SIZE    =    348    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     56      17
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,100 @@
+A51 MACRO ASSEMBLER  BUBSORT                                                              01/17/2023 15:03:52 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\BUBSORT.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE BUBSORT.asm SET(SMALL) DEBUG PRINT(.\Listings\BUBSORT.lst) OBJECT(.\Obj
+                      ects\BUBSORT.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+                       2     
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 3130              6     CALL SORT
+0102 80FE              7     HERE: SJMP HERE
+0130                   8     ORG 130H
+                       9     
+0130                  10     SORT:
+                      11     
+                      12     
+0130 7860             13     MOV R0, #60H
+0132 7970             14     MOV R1, #70H
+0134 7A08             15     MOV R2, #08H             
+                      16     
+0136 E6               17     loop: MOV A, @R0
+0137 F7               18     MOV @R1,A
+0138 08               19     INC R0
+0139 09               20     INC R1
+013A DAFA             21     DJNZ R2, loop
+                      22     
+                      23     
+013C 7E08             24     MOV R6,#08H              
+                      25     
+013E 7870             26     iterate : MOV R0,#70H
+0140 7F07             27     MOV R7,#07H  
+0142 7401             28     MOV A,#01H               
+                      29     
+0144 E6               30     start : MOV A,@R0
+0145 08               31     INC R0
+0146 86F0             32     MOV B,@R0
+0148 C3               33     CLR C
+0149 95F0             34     SUBB A,B
+                      35     
+                      36     
+                      37     
+                      38     
+014B 4008             39     JC dontswap
+                      40     
+                      41     
+014D E6               42     MOV A,@R0        
+014E 18               43     DEC R0
+014F 86F0             44     MOV B,@R0        
+0151 F6               45     MOV @R0,A        
+0152 08               46     INC R0
+0153 A6F0             47     MOV @R0,B        
+                      48     
+                      49     
+                      50     
+                      51     
+                      52     
+0155 7401             53     dontswap : MOV A,#01H  
+0157 1F               54     DEC R7
+0158 EF               55     MOV A,R7
+0159 70E9             56     JNZ start
+                      57     
+A51 MACRO ASSEMBLER  BUBSORT                                                              01/17/2023 15:03:52 PAGE     2
+
+015B 1E               58     DEC R6
+015C EE               59     MOV A, R6
+015D 6003             60     JZ store
+015F 02013E           61     LJMP iterate
+                      62     
+                      63     
+0162 22               64     store : RET
+                      65     END
+A51 MACRO ASSEMBLER  BUBSORT                                                              01/17/2023 15:03:52 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DONTSWAP . . . . .  C ADDR   0155H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+ITERATE. . . . . .  C ADDR   013EH   A   
+LOOP . . . . . . .  C ADDR   0136H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+SORT . . . . . . .  C ADDR   0130H   A   
+START. . . . . . .  C ADDR   0144H   A   
+STORE. . . . . . .  C ADDR   0162H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

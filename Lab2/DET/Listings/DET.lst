@@ -1,0 +1,68 @@
+A51 MACRO ASSEMBLER  DET                                                                  01/16/2023 15:37:12 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\DET.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE DET.asm SET(SMALL) DEBUG PRINT(.\Listings\DET.lst) OBJECT(.\Objects\DET
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 3130              6     CALL DET
+0102 80FE              7     HERE: SJMP HERE
+0130                   8     ORG 130H
+                       9     
+                      10     
+0130                  11     DET:
+                      12     
+                      13     
+                      14     
+0130 E560             15     MOV A, 60H
+0132 8563F0           16     MOV B, 63H
+0135 A4               17     MUL AB
+0136 FB               18     MOV R3,A
+0137 ACF0             19     MOV R4,B
+                      20     
+0139 E561             21     MOV A, 61H
+013B 8562F0           22     MOV B, 62H
+013E A4               23     MUL AB
+013F FD               24     MOV R5,A
+0140 AEF0             25     MOV R6,B
+                      26     
+0142 EB               27     MOV A,R3
+0143 8DF0             28     MOV B,R5
+0145 C3               29     CLR C
+0146 95F0             30     SUBB A,B
+0148 F571             31     MOV 71H,A
+                      32     
+014A EC               33     MOV A,R4
+014B 8EF0             34     MOV B,R6
+                      35     
+014D 95F0             36     SUBB A,B
+014F F570             37     MOV 70H,A
+                      38     
+0151 22               39     RET
+                      40     END
+A51 MACRO ASSEMBLER  DET                                                                  01/16/2023 15:37:12 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DET. . . . . . . .  C ADDR   0130H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

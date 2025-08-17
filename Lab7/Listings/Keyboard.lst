@@ -1,0 +1,247 @@
+C51 COMPILER V9.60.7.0   KEYBOARD                                                          03/08/2023 15:05:11 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN .\Objects\Keyboard.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE Keyboard.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -Keyboard.lst) TABS(2) OBJECT(.\Objects\Keyboard.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          code unsigned char enterpass[]="Enter Password: ";            
+   5          code unsigned char correct[]="Correct Password";      
+   6          code unsigned char granted[]="Access Granted";            
+   7          code unsigned char denied[]="Access Denied";            
+   8          code unsigned char wrong[]="Wrong Password";        
+   9          code unsigned char disp[] = "                ";
+  10          
+  11          char key[] = "15A8*D6#";
+  12          
+  13          void main()
+  14          { 
+  15   1        char input[8] = "        ";
+  16   1        unsigned int a,b;
+  17   1        unsigned int index = 0;
+  18   1        int flag = 1;
+  19   1        lcd_init();
+  20   1        msdelay(4);
+  21   1        lcd_cmd(0x80);                          //Move cursor to first line
+  22   1        msdelay(4);
+  23   1        lcd_write_string(enterpass);
+  24   1        msdelay(4);
+  25   1        //bits in higher nibble of P3 are rows
+  26   1        index = 0;
+  27   1        lcd_cmd(0xC0);
+  28   1        msdelay(4);
+  29   1      
+  30   1      for(index = 0; index < 8; index++){
+  31   2        
+  32   2        not_released: P1 = 0x00;
+  33   2        P3 = 0x0F;
+  34   2        P3 = P3 << 4 ;
+  35   2        a = P3; //P3| 0xF0;
+  36   2      
+  37   2      
+  38   2        if(a == 240){           //11110000(=240 in unsigned int)
+  39   3          goto pressed; 
+  40   3        }
+  41   2        else{
+  42   3          goto  not_released;
+  43   3        }
+  44   2        
+  45   2        pressed: a = P3;
+  46   2        if(a == 240){           
+  47   3          goto pressed; 
+  48   3        }
+  49   2        else{
+  50   3          goto debounce;
+  51   3        }
+  52   2        debounce: msdelay(20);
+  53   2        a = P3;
+  54   2        if(a == 240){         
+C51 COMPILER V9.60.7.0   KEYBOARD                                                          03/08/2023 15:05:11 PAGE 2   
+
+  55   3          goto not_released;  
+  56   3        }
+  57   2        else{
+  58   3          goto row0;
+  59   3        }
+  60   2        
+  61   2      
+  62   2      
+  63   2        row0: 
+  64   2        P3 = 0xEF;                      //scanning row 0 (P3.4)
+  65   2        msdelay(10);
+  66   2        b = P3;                               //lower nibble of b stores entry
+  67   2        b = b & 0x0F;
+  68   2        //b = b & 0xFF;
+  69   2          
+  70   2        if(b == 0x0E){
+  71   3          input[index] = 'A';
+  72   3          b = P3 ;
+  73   3          goto write;
+  74   3        }
+  75   2        else if(b == 0x0D){ 
+  76   3          input[index] = '3';
+  77   3          b = P3 ;
+  78   3          goto write;
+  79   3        }
+  80   2        else if(b == 0x0B){ 
+  81   3          input[index] = '2';
+  82   3          b = P3 ;
+  83   3          goto write;
+  84   3        }
+  85   2        else if(b == 0x07){ 
+  86   3          input[index] = '1';
+  87   3          b = P3 ;
+  88   3          goto write;
+  89   3        }
+  90   2      
+  91   2      
+  92   2        
+  93   2        row1: P3 = 0xDF;                      //scanning row 0 (P3.4)
+  94   2        msdelay(10);
+  95   2        b = P3;                               //lower nibble of b stores entry
+  96   2        b = b & 0x0F;
+  97   2        //b = b & 0xFF;
+  98   2          
+  99   2        if(b == 0x0E){
+ 100   3          input[index] = 'B';
+ 101   3          b = P3 ;
+ 102   3          goto write;
+ 103   3        }
+ 104   2        else if(b == 0x0D){ 
+ 105   3          input[index] = '6';
+ 106   3          b = P3 ;
+ 107   3          goto write;
+ 108   3        }
+ 109   2        else if(b == 0x0B){ 
+ 110   3          input[index] = '5';
+ 111   3          b = P3 ;
+ 112   3          goto write;
+ 113   3        }
+ 114   2        else if(b == 0x07){ 
+ 115   3          input[index] = '4';
+ 116   3          b = P3 ;
+C51 COMPILER V9.60.7.0   KEYBOARD                                                          03/08/2023 15:05:11 PAGE 3   
+
+ 117   3          goto write;
+ 118   3        }
+ 119   2      
+ 120   2        row2: P3 = 0xBF;                      //scanning row 0 (P3.4)
+ 121   2        msdelay(10);
+ 122   2        b = P3;                               //lower nibble of b stores entry
+ 123   2        b = b & 0x0F;
+ 124   2        //b = b & 0xFF;
+ 125   2          
+ 126   2        if(b == 0x0E){
+ 127   3          input[index] = 'C';
+ 128   3          b = P3 ;
+ 129   3          goto write;
+ 130   3        }
+ 131   2        else if(b == 0x0D){ 
+ 132   3          input[index] = '9';
+ 133   3          b = P3 ;
+ 134   3          goto write;
+ 135   3        }
+ 136   2        else if(b == 0x0B){ 
+ 137   3          input[index] = '8';
+ 138   3          b = P3 ;
+ 139   3          goto write;
+ 140   3        }
+ 141   2        else if(b == 0x07){ 
+ 142   3          input[index] = '7';
+ 143   3          b = P3 ;
+ 144   3          goto write;
+ 145   3        }
+ 146   2      
+ 147   2        row3: P3 = 0x7F;                      //scanning row 0 (P3.4)
+ 148   2        msdelay(10);
+ 149   2        b = P3;                               //lower nibble of b stores entry
+ 150   2        b = b & 0x0F;
+ 151   2        //b = b & 0xFF;
+ 152   2          
+ 153   2        if(b == 0x0E){
+ 154   3          input[index] = 'D';
+ 155   3          b = P3 ;
+ 156   3          goto write;
+ 157   3        }
+ 158   2        else if(b == 0x0D){ 
+ 159   3          input[index] = '#';
+ 160   3          b = P3 ;
+ 161   3          goto write;
+ 162   3        }
+ 163   2        else if(b == 0x0B){ 
+ 164   3          input[index] = '0';
+ 165   3          b = P3 ;
+ 166   3          goto write;
+ 167   3        }
+ 168   2        else if(b == 0x07){ 
+ 169   3          input[index] = '*';
+ 170   3          b = P3 ;
+ 171   3          goto write;
+ 172   3        }
+ 173   2        
+ 174   2        index--;
+ 175   2        goto next;
+ 176   2        
+ 177   2        write: lcd_write_char(input[index]);
+ 178   2        next: msdelay(4);
+C51 COMPILER V9.60.7.0   KEYBOARD                                                          03/08/2023 15:05:11 PAGE 4   
+
+ 179   2        
+ 180   2        
+ 181   2      }
+ 182   1      
+ 183   1        for(index = 0; index < 8; index++){
+ 184   2          if(input[index] != key[index]){
+ 185   3            flag = 0;
+ 186   3            goto notmatch;
+ 187   3          }
+ 188   2        }
+ 189   1        
+ 190   1        lcd_cmd(0x01);
+ 191   1        msdelay(4);
+ 192   1        lcd_cmd(0x80);
+ 193   1        msdelay(4);
+ 194   1        lcd_write_string(correct);
+ 195   1        msdelay(4);
+ 196   1        lcd_cmd(0xC0);
+ 197   1        msdelay(4);
+ 198   1        lcd_write_string(granted);
+ 199   1        msdelay(4);
+ 200   1        goto endd;
+ 201   1        
+ 202   1        notmatch: lcd_cmd(0x01);
+ 203   1        msdelay(4);
+ 204   1        lcd_cmd(0x80);
+ 205   1        msdelay(4);
+ 206   1        lcd_write_string(wrong);
+ 207   1        msdelay(4);
+ 208   1        lcd_cmd(0xC0);
+ 209   1        msdelay(4);
+ 210   1        lcd_write_string(denied);
+ 211   1        msdelay(4);
+ 212   1        endd: while(1);
+ 213   1          
+ 214   1      }
+*** WARNING C280 IN LINE 93 OF Keyboard.c: 'row1': unreferenced label
+*** WARNING C280 IN LINE 120 OF Keyboard.c: 'row2': unreferenced label
+*** WARNING C280 IN LINE 147 OF Keyboard.c: 'row3': unreferenced label
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    750    ----
+   CONSTANT SIZE    =    103    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

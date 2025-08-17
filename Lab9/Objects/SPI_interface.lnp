@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\SPI_interface" 
+PRINT(".\Listings\SPI_interface.m51") RAMSIZE(256) 

@@ -1,0 +1,127 @@
+C51 COMPILER V9.60.7.0   EVENTCOUNT                                                        04/08/2023 10:10:26 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE EVENTCOUNT
+OBJECT MODULE PLACED IN .\Objects\EventCount.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE EventCount.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\EventCount.lst) TABS(2) OBJECT(.\Objects\EventCount.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          sbit inpin=P3^4;
+   5          sbit outpin=P3^6;
+   6          
+   7          void timer1_isr () interrupt 3
+   8          {
+   9   1         outpin = ~outpin;
+  10   1         TF1 = 0;
+  11   1         TH1 = 0x0BE;
+  12   1         TL1 = 0x0E5;
+  13   1         TR1 = 1;
+  14   1         //Reload values for TH1 and TL1. Start timer 1.  
+  15   1      }
+  16          
+  17          
+  18          //Main function
+  19          void main(void)
+  20          { 
+  21   1        int i = 0;
+  22   1        int k = 0;
+  23   1        unsigned int min = 0;
+  24   1        unsigned int sec = 0;
+  25   1        int showit[4] = {0,0,0,0};
+  26   1          
+  27   1        P1_0 = 1;
+  28   1        lcd_init();
+  29   1        msdelay(4);
+  30   1        
+  31   1        TMOD = 0x15; //mode 1 timer 0 and for timer 1
+  32   1        TH1 = 0x0BE;  //Values for Timer 1 TH1
+  33   1        TL1 = 0x0E5;  //Values for Timer 1 TL1
+  34   1        
+  35   1        TH0 = 0x00;  //Values for Timer 0 TH0
+  36   1        TL0 = 0x00;  //Values for Timer 0 TL0
+  37   1        EA = 1;  //activate global interrupts
+  38   1        ET1 = 1; //activate interrupts for timer 1
+  39   1        TR1 = 1;
+  40   1        
+  41   1        while(1){
+  42   2          if(P1_0 == 1){
+  43   3            TR0 = 1;
+  44   3            goto outt;
+  45   3          }
+  46   2        }
+  47   1      
+  48   1        outt: while(1){
+  49   2      
+  50   2          
+  51   2          
+  52   2        i = 0;
+  53   2        k = 0;
+  54   2        sec = (TH0*256 + TL0)/(10*6); 
+C51 COMPILER V9.60.7.0   EVENTCOUNT                                                        04/08/2023 10:10:26 PAGE 2   
+
+  55   2        min = sec / 60;
+  56   2        sec = sec % 60;
+  57   2        i = sec;
+  58   2        while(i>0){
+  59   3        showit[k]=i%10;
+  60   3        i=i/10;
+  61   3        k++;
+  62   3        }
+  63   2        
+  64   2        if(k == 1){
+  65   3          k++;
+  66   3        }
+  67   2        
+  68   2        i = min;
+  69   2        while(i>0){
+  70   3        showit[k]=i%10;
+  71   3        i=i/10;
+  72   3        k++;
+  73   3        } 
+  74   2        
+  75   2        k--;
+  76   2        
+  77   2        lcd_cmd(0x80);
+  78   2        msdelay(4);
+  79   2        for (i=3;i>=2;i--){
+  80   3          lcd_write_char(showit[i] + 48);
+  81   3          msdelay(10);
+  82   3        }
+  83   2        lcd_write_char(':');
+  84   2        for (i=1;i>=0;i--){
+  85   3          lcd_write_char(showit[i] + 48);
+  86   3          msdelay(10);
+  87   3        }
+  88   2          
+  89   2        
+  90   2          
+  91   2          
+  92   2          
+  93   2          if(P1_0 == 0){
+  94   3            TR0 = 0;
+  95   3            goto display;
+  96   3          }
+  97   2        }
+  98   1        display: 
+  99   1        
+ 100   1        while(1);
+ 101   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    572    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\lab8_2.obj" 
+TO ".\Objects\Play_with_timers2" 
+PRINT(".\Listings\Play_with_timers2.m51") RAMSIZE(256) 

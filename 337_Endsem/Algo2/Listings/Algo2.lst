@@ -1,0 +1,115 @@
+C51 COMPILER V9.60.7.0   ALGO2                                                             04/08/2023 14:58:47 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE ALGO2
+OBJECT MODULE PLACED IN .\Objects\Algo2.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE Algo2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Alg
+                    -o2.lst) TABS(2) OBJECT(.\Objects\Algo2.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          long unsigned int a,b,a1,b1,a0,b0,c0,c1,c2,c3,c,sec,i,k,counter;
+   5          long unsigned int showit[5] = {0,0,0,0,0};
+   6          long unsigned int prod[9] = {0,0,0,0,0,0,0,0,0};
+   7          
+   8          
+   9          
+  10          void main(){
+  11   1      
+  12   1        k = 0;
+  13   1        counter = 1;
+  14   1        
+  15   1        a = 29851;
+  16   1        b = 11237;
+  17   1        
+  18   1        lcd_init();
+  19   1        msdelay(4);
+  20   1        
+  21   1        //configuring timer
+  22   1        TMOD = 0x10;
+  23   1        TH1 = 0x00;
+  24   1        TL1 = 0x00;
+  25   1        
+  26   1        //start
+  27   1        TR1 = 1;
+  28   1        
+  29   1        
+  30   1        a1 = a/10;
+  31   1        a0 = a%10;
+  32   1        b1 = b/10;
+  33   1        b0 = b%10;
+  34   1        c0 = a0*b0;
+  35   1        c1 = (a0+a1)*(b0+b1);
+  36   1        c2 = a1*b1;
+  37   1        c = c0 + (c1 - c0 - c2)*10 + c2*100;
+  38   1          
+  39   1        TR1 = 0;      //stop
+  40   1        
+  41   1        sec = (TH1*256 + TL1)/(2);
+  42   1      
+  43   1        //conversion to charr
+  44   1        
+  45   1        i = c;
+  46   1        for(counter = 0; counter<=8; counter++){
+  47   2        prod[counter]=i%10;
+  48   2        i=i/10;
+  49   2        }
+  50   1        
+  51   1        
+  52   1        i = sec;
+  53   1        for(counter = 1; counter<=5; counter++){
+  54   2        showit[k]=i%10;
+C51 COMPILER V9.60.7.0   ALGO2                                                             04/08/2023 14:58:47 PAGE 2   
+
+  55   2        i=i/10;
+  56   2        k++;
+  57   2        }
+  58   1        
+  59   1        if(k<4){
+  60   2        for(counter = 1; counter<=(4-k); counter++){
+  61   3      
+  62   3        showit[k] = 0;
+  63   3        k++;
+  64   3        }
+  65   2        }
+  66   1        
+  67   1        lcd_cmd(0x01);
+  68   1        msdelay(4);
+  69   1        lcd_cmd(0x80);
+  70   1        msdelay(4);
+  71   1        lcd_write_string("Prod1=");
+  72   1        msdelay(10);
+  73   1        for (i=0;i<9;i++){
+  74   2          lcd_write_char(prod[8-i] + 48);
+  75   2          msdelay(10);
+  76   2        }
+  77   1        
+  78   1        lcd_cmd(0xC0);
+  79   1        msdelay(10);
+  80   1        lcd_write_string("Time1=");
+  81   1        msdelay(10);
+  82   1        for (i=0;i<k;i++){
+  83   2          lcd_write_char(showit[4-i] + 48);
+  84   2          msdelay(10);
+  85   2        }
+  86   1        
+  87   1        while(1);
+  88   1        
+  89   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1190    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =    116       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

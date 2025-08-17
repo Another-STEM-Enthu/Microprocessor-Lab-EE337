@@ -1,0 +1,239 @@
+A51 MACRO ASSEMBLER  QUESTION1                                                            02/12/2023 14:09:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\QUESTION1.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE QUESTION1.asm SET(SMALL) DEBUG PRINT(.\Listings\QUESTION1.lst) OBJECT(.
+                      \Objects\QUESTION1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020130            2     LJMP main
+                       3     
+0130                   4     ORG 130H
+0130                   5     main : 
+0130 7570D8            6     MOV 70H, #216
+0133 75715B            7     MOV 71H, #91
+                       8     
+                       9     
+0136 7C01             10     MOV R4, #01H    
+0138 7BFF             11     MOV R3, #0FFH    
+013A AF70             12     MOV R7, 70H              
+013C 020164           13     LJMP multiply
+013F E570             14     showitt : MOV A, 70H
+0141 8572F0           15     MOV B, 72H
+0144 A4               16     MUL AB
+0145 04               17     INC A 
+0146 F8               18     MOV R0, A
+0147 A9F0             19     MOV R1, B
+                      20     
+0149 7D00             21     MOV R5, #00H
+014B                  22     divsub : 
+014B AA71             23     MOV R2, 71H
+014D E8               24     MOV A, R0
+014E 8AF0             25     MOV B, R2
+0150 C3               26     CLR C
+0151 95F0             27     SUBB A, B
+0153 F8               28     MOV R0, A
+0154 E9               29     MOV A, R1
+0155 75F000           30     MOV B, #0H
+0158 95F0             31     SUBB A,B
+015A F9               32     MOV R1, A
+015B 0D               33     INC R5
+015C 70ED             34     JNZ divsub
+015E 0D               35     INC R5
+015F 8D72             36     MOV 72H, R5
+                      37     
+                      38     
+                      39     
+                      40     
+0161 1201F9           41     LCALL display
+                      42     
+0164 EF               43     multiply: MOV A, R7
+0165 8CF0             44     MOV B, R4
+0167 A4               45     MUL AB
+0168 04               46     INC A                    
+0169 F8               47     MOV R0, A                
+016A A9F0             48     MOV R1, B                
+016C 120181           49     LCALL checkmod
+                      50     
+                      51     
+                      52     
+016F 600B             53     JZ foundit
+0171 8571F0           54     MOV B, 71H
+0174 C3               55     CLR C
+0175 95F0             56     SUBB A, B
+0177 6003             57     JZ foundit
+A51 MACRO ASSEMBLER  QUESTION1                                                            02/12/2023 14:09:27 PAGE     2
+
+                      58     
+0179 0C               59     INC R4
+017A DBE8             60     DJNZ R3, multiply
+017C 8C72             61     foundit : MOV 72H, R4
+017E 02013F           62     LJMP showitt
+                      63     
+                      64     
+                      65     
+                      66     
+                      67     
+                      68     
+                      69     
+                      70     
+0181                  71     checkmod:        
+0181 7E00             72     MOV R6, #00H     
+0183 0E               73     subtract : INC R6
+0184 7401             74     MOV A, #01H
+0186 8571F0           75     MOV B, 71H
+0189 A4               76     MUL AB           
+018A AAF0             77     MOV R2, B        
+018C FD               78     MOV R5, A        
+018D E8               79     MOV A, R0
+018E 8DF0             80     MOV B, R5
+0190 C3               81     CLR C
+0191 95F0             82     SUBB A, B
+0193 F8               83     MOV R0, A
+0194 E9               84     MOV A, R1
+0195 8AF0             85     MOV B, R2
+0197 95F0             86     SUBB A,B
+0199 4003             87     JC gotit
+019B F9               88     MOV R1, A        
+019C 6002             89     JZ cont
+019E 50E3             90     gotit : JNC subtract
+                      91     
+01A0 ED               92     cont : MOV A, R5
+01A1 28               93     ADD A, R0
+01A2 F8               94     MOV R0, A
+                      95     
+                      96     
+                      97     
+01A3 E9               98     MOV A, R1
+01A4 7009             99     JNZ sub2
+01A6 E8              100     MOV A, R0
+01A7 8571F0          101     MOV B, 71H
+01AA C3              102     CLR C
+01AB 95F0            103     SUBB A, B
+01AD 4011            104     JC jmpp
+                     105     
+01AF E8              106     sub2 : MOV A, R0
+01B0 8571F0          107     MOV B, 71H
+01B3 C3              108     CLR C
+01B4 95F0            109     SUBB A, B
+01B6 F8              110     MOV R0, A
+01B7 E9              111     MOV A, R1
+01B8 75F000          112     MOV B, #0H
+01BB 95F0            113     SUBB A, B
+01BD F9              114     MOV R1, A
+01BE 70EF            115     JNZ sub2
+                     116     
+01C0 E8              117     jmpp : MOV A, R0
+01C1 F572            118     MOV 72H, A
+                     119     
+01C3 22              120     RET
+                     121     
+                     122     
+01C4                 123     delay_1s:
+A51 MACRO ASSEMBLER  QUESTION1                                                            02/12/2023 14:09:27 PAGE     3
+
+01C4 C000            124     push 00h
+01C6 7804            125     mov r0, #4
+01C8 31DA            126     h5: acall delay_250ms
+01CA D8FC            127     djnz r0, h5
+01CC D000            128     pop 00h
+01CE 22              129     ret
+                     130     
+01CF                 131     delay_5s:
+01CF C000            132     push 00h
+01D1 7814            133     mov r0, #20
+01D3 31DA            134     h4: acall delay_250ms
+01D5 D8FC            135     djnz r0, h4
+01D7 D000            136     pop 00h
+01D9 22              137     ret
+                     138     
+01DA                 139     delay_250ms:
+01DA C000            140     push 00h
+01DC 78FA            141     mov r0, #250
+01DE 31E5            142     h3: acall delay_1ms
+01E0 D8FC            143     djnz r0, h3
+01E2 D000            144     pop 00h
+01E4 22              145     ret
+                     146     
+                     147     
+01E5                 148     delay_1ms:
+01E5 C000            149     push 00h
+01E7 7804            150     mov r0, #4
+01E9 31F0            151     h2: acall delay_250us
+01EB D8FC            152     djnz r0, h2
+01ED D000            153     pop 00h
+01EF 22              154     ret
+                     155     
+                     156     
+01F0                 157     delay_250us:
+01F0 C000            158     push 00h
+01F2 78F4            159     mov r0, #244
+01F4 D8FE            160     h1: djnz r0, h1
+01F6 D000            161     pop 00h
+01F8 22              162     ret
+                     163     
+                     164     
+                     165     
+                     166     
+01F9 8C72            167     display : MOV 72H, R4
+                     168     
+01FB E572            169     MOV A, 72H
+01FD 54F0            170     ANL A, #0F0H
+01FF F590            171     MOV P1, A
+0201 1201CF          172     LCALL delay_5s
+                     173     
+0204 759000          174     MOV P1, #00H
+0207 1201C4          175     LCALL delay_1s
+                     176     
+020A E572            177     MOV A, 72H
+020C 540F            178     ANL A, #0FH
+020E C4              179     SWAP A
+020F F590            180     MOV P1, A
+0211 1201CF          181     LCALL delay_5s
+                     182     
+0214 759000          183     MOV P1, #00H
+0217 1201C4          184     LCALL delay_1s
+                     185     
+                     186     END
+                             
+A51 MACRO ASSEMBLER  QUESTION1                                                            02/12/2023 14:09:27 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+CHECKMOD . . . . .  C ADDR   0181H   A   
+CONT . . . . . . .  C ADDR   01A0H   A   
+DELAY_1MS. . . . .  C ADDR   01E5H   A   
+DELAY_1S . . . . .  C ADDR   01C4H   A   
+DELAY_250MS. . . .  C ADDR   01DAH   A   
+DELAY_250US. . . .  C ADDR   01F0H   A   
+DELAY_5S . . . . .  C ADDR   01CFH   A   
+DISPLAY. . . . . .  C ADDR   01F9H   A   
+DIVSUB . . . . . .  C ADDR   014BH   A   
+FOUNDIT. . . . . .  C ADDR   017CH   A   
+GOTIT. . . . . . .  C ADDR   019EH   A   
+H1 . . . . . . . .  C ADDR   01F4H   A   
+H2 . . . . . . . .  C ADDR   01E9H   A   
+H3 . . . . . . . .  C ADDR   01DEH   A   
+H4 . . . . . . . .  C ADDR   01D3H   A   
+H5 . . . . . . . .  C ADDR   01C8H   A   
+JMPP . . . . . . .  C ADDR   01C0H   A   
+MAIN . . . . . . .  C ADDR   0130H   A   
+MULTIPLY . . . . .  C ADDR   0164H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SHOWITT. . . . . .  C ADDR   013FH   A   
+SUB2 . . . . . . .  C ADDR   01AFH   A   
+SUBTRACT . . . . .  C ADDR   0183H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

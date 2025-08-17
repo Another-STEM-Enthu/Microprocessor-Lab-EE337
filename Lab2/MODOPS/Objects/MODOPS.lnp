@@ -1,0 +1,3 @@
+".\Objects\MODOPS.obj" 
+TO ".\Objects\MODOPS" 
+PRINT(".\Listings\MODOPS.m51") RAMSIZE(256) 

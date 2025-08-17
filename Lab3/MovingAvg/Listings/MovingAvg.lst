@@ -1,0 +1,75 @@
+A51 MACRO ASSEMBLER  MOVINGAVG                                                            01/22/2023 19:57:25 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MovingAvg.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE MovingAvg.asm SET(SMALL) DEBUG PRINT(.\Listings\MovingAvg.lst) OBJECT(.
+                      \Objects\MovingAvg.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 3130              6     CALL FILT
+0102 80FE              7     HERE: SJMP HERE
+0130                   8     ORG 130H
+                       9     
+0130                  10     FILT:
+0130 7860             11     MOV R0, #60H     
+                      12     
+                      13     
+0132 18               14     DEC R0
+0133 7600             15     MOV @R0, #00H
+0135 18               16     DEC R0
+0136 7600             17     MOV @R0, #00H
+0138 18               18     DEC R0
+0139 7600             19     MOV @R0, #00H
+                      20     
+                      21     
+013B 7C08             22     MOV R4, #08H     
+013D 7860             23     MOV R0, #60H     
+013F 7970             24     MOV R1, #70H     
+                      25     
+0141 E6               26     loopit : MOV A, @R0
+0142 18               27     DEC R0
+0143 26               28     ADD A,@R0
+0144 18               29     DEC R0
+0145 26               30     ADD A,@R0
+0146 18               31     DEC R0
+0147 26               32     ADD A,@R0
+0148 08               33     INC R0
+0149 08               34     INC R0
+014A 08               35     INC R0
+                      36     
+014B 75F004           37     MOV B, #04
+014E 84               38     DIV AB
+014F F7               39     MOV @R1,A
+                      40     
+0150 08               41     INC R0
+0151 09               42     INC R1
+0152 DCED             43     DJNZ R4, loopit
+                      44     
+0154 22               45     RET
+                      46     END
+A51 MACRO ASSEMBLER  MOVINGAVG                                                            01/22/2023 19:57:25 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+FILT . . . . . . .  C ADDR   0130H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+LOOPIT . . . . . .  C ADDR   0141H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

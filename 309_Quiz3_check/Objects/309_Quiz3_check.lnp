@@ -1,0 +1,3 @@
+".\Objects\QUIZ3_CHECK.obj" 
+TO ".\Objects\309_Quiz3_check" 
+PRINT(".\Listings\309_Quiz3_check.m51") RAMSIZE(256) 

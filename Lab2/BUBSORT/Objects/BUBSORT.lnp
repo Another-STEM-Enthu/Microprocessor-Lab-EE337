@@ -1,0 +1,3 @@
+".\Objects\BUBSORT.obj" 
+TO ".\Objects\BUBSORT" 
+PRINT(".\Listings\BUBSORT.m51") RAMSIZE(256) 

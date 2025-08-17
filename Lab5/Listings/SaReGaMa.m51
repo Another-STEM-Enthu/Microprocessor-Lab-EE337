@@ -1,0 +1,136 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    02/07/2023  14:08:22  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+D:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\SaReGaMa.obj TO .\Objects\SaReGaMa PRINT (.\Listings\SaReGaMa.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\SaReGaMa.obj (SAREGAMA)
+
+
+LINK MAP OF MODULE:  .\Objects\SaReGaMa (SAREGAMA)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     01ACH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\SaReGaMa (SAREGAMA)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SAREGAMA
+  C:0159H         SYMBOL        ADDMORESA
+  D:00F0H         SYMBOL        B
+  C:0164H         SYMBOL        DELAY_8US
+  C:013BH         SYMBOL        DELAY_GA
+  C:0130H         SYMBOL        DELAY_MA
+  C:0146H         SYMBOL        DELAY_RE
+  C:0151H         SYMBOL        DELAY_SA
+  C:0168H         SYMBOL        H1
+  C:015BH         SYMBOL        H3
+  C:014AH         SYMBOL        H4
+  C:013FH         SYMBOL        H5
+  C:0134H         SYMBOL        H6
+  C:0102H         SYMBOL        HERE
+  C:016EH         SYMBOL        LOOP
+  C:0100H         SYMBOL        MAIN
+  C:018EH         SYMBOL        NOTGA
+  C:017FH         SYMBOL        NOTMA
+  C:019DH         SYMBOL        NOTRE
+  D:0080H         SYMBOL        P0
+  D:0090H         SYMBOL        P1
+  C:016DH         SYMBOL        PLAY_NOTES
+  C:0000H         LINE#         2
+  C:0100H         LINE#         5
+  C:0102H         LINE#         8
+  C:0130H         LINE#         12
+  C:0132H         LINE#         13
+  C:0134H         LINE#         14
+  C:0136H         LINE#         15
+  C:0138H         LINE#         16
+  C:013AH         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/07/2023  14:08:22  PAGE 2
+
+
+  C:013BH         LINE#         20
+  C:013DH         LINE#         21
+  C:013FH         LINE#         22
+  C:0141H         LINE#         23
+  C:0143H         LINE#         24
+  C:0145H         LINE#         25
+  C:0146H         LINE#         28
+  C:0148H         LINE#         29
+  C:014AH         LINE#         30
+  C:014CH         LINE#         31
+  C:014EH         LINE#         32
+  C:0150H         LINE#         33
+  C:0151H         LINE#         36
+  C:0153H         LINE#         37
+  C:0155H         LINE#         38
+  C:0157H         LINE#         39
+  C:0159H         LINE#         40
+  C:015BH         LINE#         41
+  C:015DH         LINE#         42
+  C:015FH         LINE#         43
+  C:0161H         LINE#         44
+  C:0163H         LINE#         45
+  C:0164H         LINE#         50
+  C:0166H         LINE#         51
+  C:0168H         LINE#         52
+  C:016AH         LINE#         53
+  C:016CH         LINE#         54
+  C:016DH         LINE#         57
+  C:016EH         LINE#         60
+  C:0170H         LINE#         61
+  C:0172H         LINE#         62
+  C:0174H         LINE#         63
+  C:0175H         LINE#         64
+  C:0177H         LINE#         65
+  C:0179H         LINE#         66
+  C:017BH         LINE#         67
+  C:017DH         LINE#         68
+  C:017FH         LINE#         70
+  C:0181H         LINE#         71
+  C:0183H         LINE#         72
+  C:0184H         LINE#         73
+  C:0186H         LINE#         74
+  C:0188H         LINE#         75
+  C:018AH         LINE#         76
+  C:018CH         LINE#         77
+  C:018EH         LINE#         79
+  C:0190H         LINE#         80
+  C:0192H         LINE#         81
+  C:0193H         LINE#         82
+  C:0195H         LINE#         83
+  C:0197H         LINE#         84
+  C:0199H         LINE#         85
+  C:019BH         LINE#         86
+  C:019DH         LINE#         88
+  C:019FH         LINE#         89
+  C:01A1H         LINE#         90
+  C:01A2H         LINE#         91
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/07/2023  14:08:22  PAGE 3
+
+
+  C:01A4H         LINE#         92
+  C:01A6H         LINE#         93
+  C:01A8H         LINE#         94
+  C:01AAH         LINE#         95
+  -------         ENDMOD        SAREGAMA
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0083H BYTE ( 6%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=428
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

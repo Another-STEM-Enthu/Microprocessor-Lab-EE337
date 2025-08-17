@@ -1,0 +1,40 @@
+A51 MACRO ASSEMBLER  QUIZ3_CHECK                                                          02/21/2023 18:29:02 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\QUIZ3_CHECK.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE QUIZ3_CHECK.asm SET(SMALL) DEBUG PRINT(.\Listings\QUIZ3_CHECK.lst) OBJE
+                      CT(.\Objects\QUIZ3_CHECK.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+                       2     
+                       3     
+0000 75D008            4     MOV PSW, #00001000B
+0003 7401              5     MOV A, #01H
+0005 75F0FF            6     MOV B, #0FFH
+0008 25F0              7     ADD A, B
+000A A8F0              8     MOV R0, B
+000C 758147            9     MOV SP, #047H
+000F C011             10     PUSH 11H
+0011 920A             11     MOV 21H.2, C
+                      12     END
+                             
+A51 MACRO ASSEMBLER  QUIZ3_CHECK                                                          02/21/2023 18:29:02 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

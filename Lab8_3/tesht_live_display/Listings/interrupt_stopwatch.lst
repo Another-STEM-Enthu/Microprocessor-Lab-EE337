@@ -1,0 +1,127 @@
+C51 COMPILER V9.60.7.0   INTERRUPT_STOPWATCH                                               04/08/2023 10:44:15 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE INTERRUPT_STOPWATCH
+OBJECT MODULE PLACED IN .\Objects\interrupt_stopwatch.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE interrupt_stopwatch.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Listings\interrupt_stopwatch.lst) TABS(2) OBJECT(.\Objects\interrupt_stopwatch.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          sbit inpin=P3^4;
+   5          sbit outpin=P3^6;
+   6          
+   7          void timer1_isr () interrupt 3
+   8          {
+   9   1         outpin = ~outpin;
+  10   1         TF1 = 0;
+  11   1         TH1 = 0x0BE;
+  12   1         TL1 = 0x0E5;
+  13   1         TR1 = 1;
+  14   1         //Reload values for TH1 and TL1. Start timer 1.  
+  15   1      }
+  16          
+  17          void ext_int_0 () interrupt 0 
+  18          { 
+  19   1          TR0 = ~TR0;
+  20   1          //TCON &= 0xFD;
+  21   1      }
+  22           
+  23          
+  24          
+  25          
+  26          //Main function
+  27          void main(void)
+  28          { 
+  29   1        int i = 0;
+  30   1        int k = 0;
+  31   1        unsigned int min = 0;
+  32   1        unsigned int sec = 0;
+  33   1        int showit[4] = {0,0,0,0};
+  34   1          
+  35   1        P1_0 = 1;
+  36   1        lcd_init();
+  37   1        msdelay(4);
+  38   1        
+  39   1        TMOD = 0x15; //mode 1 timer 0 and for timer 1
+  40   1        TH1 = 0x0BE;  //Values for Timer 1 TH1
+  41   1        TL1 = 0x0E5;  //Values for Timer 1 TL1
+  42   1        
+  43   1        TH0 = 0x00;  //Values for Timer 0 TH0
+  44   1        TL0 = 0x00;  //Values for Timer 0 TL0
+  45   1        EA = 1;  //activate global interrupts
+  46   1        ET1 = 1; //activate interrupts for timer 1
+  47   1        TR1 = 1;
+  48   1        
+  49   1        EX0 = 1;
+  50   1        IT0 = 1;  
+  51   1        
+  52   1        
+  53   1        outt: while(1){
+  54   2      
+C51 COMPILER V9.60.7.0   INTERRUPT_STOPWATCH                                               04/08/2023 10:44:15 PAGE 2   
+
+  55   2          
+  56   2          
+  57   2        i = 0;
+  58   2        k = 0;
+  59   2        sec = (TH0*256 + TL0)/(10*6); 
+  60   2        min = sec / 60;
+  61   2        sec = sec % 60;
+  62   2        i = sec;
+  63   2        while(i>0){
+  64   3        showit[k]=i%10;
+  65   3        i=i/10;
+  66   3        k++;
+  67   3        }
+  68   2        
+  69   2        if(k == 1){
+  70   3          k++;
+  71   3        }
+  72   2        
+  73   2        i = min;
+  74   2        while(i>0){
+  75   3        showit[k]=i%10;
+  76   3        i=i/10;
+  77   3        k++;
+  78   3        } 
+  79   2        
+  80   2        k--;
+  81   2        
+  82   2        lcd_cmd(0x80);
+  83   2        msdelay(4);
+  84   2        for (i=3;i>=2;i--){
+  85   3          lcd_write_char(showit[i] + 48);
+  86   3          msdelay(10);
+  87   3        }
+  88   2        lcd_write_char(':');
+  89   2        for (i=1;i>=0;i--){
+  90   3          lcd_write_char(showit[i] + 48);
+  91   3          msdelay(10);
+  92   3        }
+  93   2          
+  94   2        
+  95   2        }
+  96   1        display: 
+  97   1        
+  98   1        while(1);
+  99   1      }  
+*** WARNING C280 IN LINE 53 OF interrupt_stopwatch.c: 'outt': unreferenced label
+*** WARNING C280 IN LINE 96 OF interrupt_stopwatch.c: 'display': unreferenced label
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    569    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

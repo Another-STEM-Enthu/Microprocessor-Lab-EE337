@@ -1,0 +1,87 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    01/17/2023  15:03:52  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+D:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\BUBSORT.obj TO .\Objects\BUBSORT PRINT (.\Listings\BUBSORT.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\BUBSORT.obj (BUBSORT)
+
+
+LINK MAP OF MODULE:  .\Objects\BUBSORT (BUBSORT)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0163H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\BUBSORT (BUBSORT)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BUBSORT
+  D:00F0H         SYMBOL        B
+  C:0155H         SYMBOL        DONTSWAP
+  C:0102H         SYMBOL        HERE
+  C:013EH         SYMBOL        ITERATE
+  C:0136H         SYMBOL        LOOP
+  C:0100H         SYMBOL        MAIN
+  C:0130H         SYMBOL        SORT
+  C:0144H         SYMBOL        START
+  C:0162H         SYMBOL        STORE
+  C:0000H         LINE#         3
+  C:0100H         LINE#         6
+  C:0102H         LINE#         7
+  C:0130H         LINE#         13
+  C:0132H         LINE#         14
+  C:0134H         LINE#         15
+  C:0136H         LINE#         17
+  C:0137H         LINE#         18
+  C:0138H         LINE#         19
+  C:0139H         LINE#         20
+  C:013AH         LINE#         21
+  C:013CH         LINE#         24
+  C:013EH         LINE#         26
+  C:0140H         LINE#         27
+  C:0142H         LINE#         28
+  C:0144H         LINE#         30
+  C:0145H         LINE#         31
+  C:0146H         LINE#         32
+  C:0148H         LINE#         33
+  C:0149H         LINE#         34
+  C:014BH         LINE#         39
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  01/17/2023  15:03:52  PAGE 2
+
+
+  C:014DH         LINE#         42
+  C:014EH         LINE#         43
+  C:014FH         LINE#         44
+  C:0151H         LINE#         45
+  C:0152H         LINE#         46
+  C:0153H         LINE#         47
+  C:0155H         LINE#         53
+  C:0157H         LINE#         54
+  C:0158H         LINE#         55
+  C:0159H         LINE#         56
+  C:015BH         LINE#         58
+  C:015CH         LINE#         59
+  C:015DH         LINE#         60
+  C:015FH         LINE#         61
+  C:0162H         LINE#         64
+  -------         ENDMOD        BUBSORT
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 003AH BYTE ( 2%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=355
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

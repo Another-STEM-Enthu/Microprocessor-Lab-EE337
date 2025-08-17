@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\BoardManager.obj" 
+TO ".\Objects\WEL_Boards" 
+PRINT(".\Listings\WEL_Boards.m51") RAMSIZE(256) 

@@ -1,0 +1,263 @@
+A51 MACRO ASSEMBLER  DELAYEDINPUTS                                                        01/30/2023 22:06:40 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\DelayedInputs.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE DelayedInputs.asm SET(SMALL) DEBUG PRINT(.\Listings\DelayedInputs.lst) 
+                      OBJECT(.\Objects\DelayedInputs.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 3165              6     CALL TAKE_INP
+0102 31A8              7     CALL QUANT_ENC
+0104 31DE              8     CALL LED_DISP
+                       9     
+0106 80FE             10     HERE: SJMP HERE
+0130                  11     ORG 130H
+                      12     
+                      13     
+0130                  14     delay_10s:
+0130 C000             15     push 00h
+0132 7828             16     mov r0, #40
+0134 3146             17     h5: acall delay_250ms
+0136 D8FC             18     djnz r0, h5
+0138 D000             19     pop 00h
+013A 22               20     ret
+                      21     
+013B                  22     delay_5s:
+013B C000             23     push 00h
+013D 7814             24     mov r0, #20
+013F 3146             25     h4: acall delay_250ms
+0141 D8FC             26     djnz r0, h4
+0143 D000             27     pop 00h
+0145 22               28     ret
+                      29     
+0146                  30     delay_250ms:
+0146 C000             31     push 00h
+0148 78FA             32     mov r0, #250
+014A 3151             33     h3: acall delay_1ms
+014C D8FC             34     djnz r0, h3
+014E D000             35     pop 00h
+0150 22               36     ret
+                      37     
+                      38     
+0151                  39     delay_1ms:
+0151 C000             40     push 00h
+0153 7804             41     mov r0, #4
+0155 315C             42     h2: acall delay_250us
+0157 D8FC             43     djnz r0, h2
+0159 D000             44     pop 00h
+015B 22               45     ret
+                      46     
+                      47     
+015C                  48     delay_250us:
+015C C000             49     push 00h
+015E 78F4             50     mov r0, #244
+0160 D8FE             51     h1: djnz r0, h1
+0162 D000             52     pop 00h
+0164 22               53     ret
+                      54     
+                      55     
+                      56     
+0165                  57     TAKE_INP:
+A51 MACRO ASSEMBLER  DELAYEDINPUTS                                                        01/30/2023 22:06:40 PAGE     2
+
+0165 7860             58     MOV R0, #60H
+0167 7D01             59     MOV R5, #01              
+0169 7E04             60     MOV R6, #04              
+                      61     
+016B                  62     takein: 
+016B 7400             63     MOV A, #00H
+016D 75F000           64     MOV B, #00H
+                      65     
+                      66     
+0170 ED               67     MOV A, R5
+0171 C4               68     SWAP A
+0172 F590             69     MOV P1,A
+0174 D290             70     SETB P1.0
+0176 D291             71     SETB P1.1
+0178 D292             72     SETB P1.2
+017A D293             73     SETB P1.3
+017C 3130             74     CALL delay_10s
+017E E590             75     MOV A, P1
+0180 540F             76     ANL A, #0FH
+0182 C4               77     SWAP A
+0183 F5F0             78     MOV B,A
+                      79     
+0185 0D               80     INC R5
+                      81     
+0186 ED               82     MOV A, R5
+0187 C4               83     SWAP A
+0188 F590             84     MOV P1,A
+018A D290             85     SETB P1.0
+018C D291             86     SETB P1.1
+018E D292             87     SETB P1.2
+0190 D293             88     SETB P1.3
+0192 3130             89     CALL delay_10s
+0194 E590             90     MOV A, P1
+0196 540F             91     ANL A, #0FH
+0198 25F0             92     ADD A, B
+                      93     
+                      94     
+019A F6               95     MOV @R0,A
+019B 08               96     INC R0
+019C 0D               97     INC R5
+019D DECC             98     DJNZ R6, takein
+                      99     
+                     100     
+                     101     
+                     102     
+019F C294            103     CLR P1.4
+01A1 C295            104     CLR P1.5
+01A3 C296            105     CLR P1.6
+01A5 C297            106     CLR P1.7
+01A7 22              107     RET
+                     108     
+                     109     
+                     110     
+01A8                 111     QUANT_ENC:
+01A8 7C04            112     MOV R4, #04H     
+01AA 7860            113     MOV R0, #60H     
+01AC 7970            114     MOV R1, #70H     
+                     115     
+01AE 86F0            116     loop : MOV B, @R0        
+                     117     
+01B0 E5F0            118     MOV A, B
+01B2 5480            119     ANL A, #10000000B        
+01B4 7021            120     JNZ elsee                        
+                     121     
+01B6 E5F0            122     MOV A, B
+01B8 C3              123     CLR C
+A51 MACRO ASSEMBLER  DELAYEDINPUTS                                                        01/30/2023 22:06:40 PAGE     3
+
+01B9 940A            124     SUBB A, #10
+01BB 5004            125     JNC elseif1
+01BD 7705            126     MOV @R1, #5              
+01BF 8018            127     SJMP done                        
+                     128     
+01C1 E5F0            129     elseif1 : MOV A, B
+01C3 C3              130     CLR C
+01C4 9414            131     SUBB A, #20
+01C6 5004            132     JNC elseif2
+01C8 770F            133     MOV @R1, #15             
+01CA 800D            134     SJMP done                        
+                     135     
+01CC E5F0            136     elseif2 : MOV A,B
+01CE C3              137     CLR C
+01CF 941E            138     SUBB A, #30
+01D1 5004            139     JNC elsee
+01D3 7719            140     MOV @R1, #25             
+01D5 8002            141     SJMP done                
+                     142     
+                     143     
+                     144     
+01D7 7723            145     elsee : MOV @R1,#35
+                     146     
+01D9 08              147     done : INC R0
+01DA 09              148     INC R1
+01DB DCD1            149     DJNZ R4, loop
+01DD 22              150     RET
+                     151     
+                     152     
+                     153     
+                     154     
+01DE                 155     LED_DISP:
+                     156     
+01DE C3              157     infloop : CLR C
+                     158     
+01DF 7C04            159     MOV R4, #04H     
+01E1 7870            160     MOV R0, #70H     
+                     161     
+01E3 E6              162     displayloop : MOV A, @R0
+01E4 C3              163     CLR C
+01E5 9405            164     SUBB A,#05
+01E7 700A            165     JNZ check15
+01E9 D294            166     SETB P1.4
+01EB C295            167     CLR P1.5
+01ED C296            168     CLR P1.6
+01EF C297            169     CLR P1.7
+01F1 8028            170     SJMP putthedelay
+                     171     
+01F3 E6              172     check15: MOV A, @R0
+01F4 C3              173     CLR C
+01F5 940F            174     SUBB A, #15
+01F7 700A            175     JNZ check25
+01F9 C294            176     CLR P1.4
+01FB D295            177     SETB P1.5
+01FD C296            178     CLR P1.6
+01FF C297            179     CLR P1.7
+0201 8018            180     SJMP putthedelay
+                     181     
+0203 E6              182     check25: MOV A, @R0
+0204 C3              183     CLR C
+0205 9419            184     SUBB A, #25
+0207 700A            185     JNZ elsee11
+0209 C294            186     CLR P1.4
+020B C295            187     CLR P1.5
+020D D296            188     SETB P1.6
+020F C297            189     CLR P1.7
+A51 MACRO ASSEMBLER  DELAYEDINPUTS                                                        01/30/2023 22:06:40 PAGE     4
+
+0211 8008            190     SJMP putthedelay
+                     191     
+0213                 192     elsee11 : 
+0213 C294            193     CLR P1.4
+0215 C295            194     CLR P1.5
+0217 C296            195     CLR P1.6
+0219 D297            196     SETB P1.7
+                     197     
+021B 313B            198     putthedelay: CALL delay_5s
+                     199     
+021D 08              200     INC R0
+021E DCC3            201     DJNZ R4, displayloop
+0220 80BC            202     SJMP infloop
+0222 22              203     RET
+                     204     END
+A51 MACRO ASSEMBLER  DELAYEDINPUTS                                                        01/30/2023 22:06:40 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+CHECK15. . . . . .  C ADDR   01F3H   A   
+CHECK25. . . . . .  C ADDR   0203H   A   
+DELAY_10S. . . . .  C ADDR   0130H   A   
+DELAY_1MS. . . . .  C ADDR   0151H   A   
+DELAY_250MS. . . .  C ADDR   0146H   A   
+DELAY_250US. . . .  C ADDR   015CH   A   
+DELAY_5S . . . . .  C ADDR   013BH   A   
+DISPLAYLOOP. . . .  C ADDR   01E3H   A   
+DONE . . . . . . .  C ADDR   01D9H   A   
+ELSEE. . . . . . .  C ADDR   01D7H   A   
+ELSEE11. . . . . .  C ADDR   0213H   A   
+ELSEIF1. . . . . .  C ADDR   01C1H   A   
+ELSEIF2. . . . . .  C ADDR   01CCH   A   
+H1 . . . . . . . .  C ADDR   0160H   A   
+H2 . . . . . . . .  C ADDR   0155H   A   
+H3 . . . . . . . .  C ADDR   014AH   A   
+H4 . . . . . . . .  C ADDR   013FH   A   
+H5 . . . . . . . .  C ADDR   0134H   A   
+HERE . . . . . . .  C ADDR   0106H   A   
+INFLOOP. . . . . .  C ADDR   01DEH   A   
+LED_DISP . . . . .  C ADDR   01DEH   A   
+LOOP . . . . . . .  C ADDR   01AEH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PUTTHEDELAY. . . .  C ADDR   021BH   A   
+QUANT_ENC. . . . .  C ADDR   01A8H   A   
+TAKEIN . . . . . .  C ADDR   016BH   A   
+TAKE_INP . . . . .  C ADDR   0165H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

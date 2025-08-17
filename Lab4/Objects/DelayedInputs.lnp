@@ -1,0 +1,3 @@
+".\Objects\DelayedInputs.obj" 
+TO ".\Objects\DelayedInputs" 
+PRINT(".\Listings\DelayedInputs.m51") RAMSIZE(256) 

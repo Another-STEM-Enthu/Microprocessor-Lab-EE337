@@ -1,0 +1,3 @@
+".\Objects\DET.obj" 
+TO ".\Objects\DET" 
+PRINT(".\Listings\DET.m51") RAMSIZE(256) 

@@ -1,0 +1,114 @@
+A51 MACRO ASSEMBLER  MODOPS                                                               01/17/2023 14:46:39 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\MODOPS.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE MODOPS.asm SET(SMALL) DEBUG PRINT(.\Listings\MODOPS.lst) OBJECT(.\Objec
+                      ts\MODOPS.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 7961              6     MOV R1, #61H
+0102 3130              7     CALL MODADD
+0104 315D              8     CALL MODSUB
+0106 80FE              9     HERE: SJMP HERE
+0130                  10     ORG 130H
+                      11     
+                      12     
+                      13     
+0130                  14     MODADD:
+0130 8571F0           15     MOV B, 71H
+0133 E570             16     MOV A, 70H
+0135 25F0             17     ADD A,B
+0137 501C             18     JNC nocarry
+                      19     
+0139 E570             20     loopit : MOV A, 70H
+013B 89F0             21     MOV B, R1
+013D 84               22     DIV AB
+013E AEF0             23     MOV R6, B
+0140 E571             24     MOV A, 71H
+0142 89F0             25     MOV B, R1
+0144 84               26     DIV AB
+0145 AFF0             27     MOV R7, B
+0147 EE               28     MOV A, R6
+0148 8FF0             29     MOV B, R7
+014A 25F0             30     ADD A, B
+014C 89F0             31     MOV B, R1
+014E 84               32     DIV AB
+014F E5F0             33     MOV A, B
+0151 F572             34     MOV 72H, A
+0153 8007             35     JMP done
+                      36     
+0155 89F0             37     nocarry : MOV B,R1
+0157 84               38     DIV AB
+0158 E5F0             39     MOV A,B  
+015A F572             40     MOV 72H,A
+015C 22               41     done : RET
+                      42     
+015D                  43     MODSUB:
+015D 8571F0           44     MOV B, 71H
+0160 E570             45     MOV A, 70H
+0162 C3               46     CLR C
+0163 95F0             47     SUBB A,B
+                      48     
+                      49     
+                      50     
+                      51     
+0165 5011             52     JNC POS
+0167 F5F0             53     MOV B,A 
+0169 74FF             54     MOV A, #0FFH
+016B C3               55     CLR C
+016C 95F0             56     SUBB A,B  
+016E 04               57     INC A  
+A51 MACRO ASSEMBLER  MODOPS                                                               01/17/2023 14:46:39 PAGE     2
+
+                      58     
+                      59     
+016F 89F0             60     MOV B,R1
+0171 84               61     DIV AB
+                      62     
+0172 E9               63     MOV A, R1
+0173 C3               64     CLR C
+0174 95F0             65     SUBB A,B
+0176 5005             66     JNC NEG
+                      67     
+                      68     
+                      69     
+0178 89F0             70     POS : MOV B,R1
+017A 84               71     DIV AB
+017B E5F0             72     MOV A,B  
+                      73     
+017D F573             74     NEG : MOV 73H,A
+017F 22               75     RET
+                      76     
+                      77     
+                      78     END
+A51 MACRO ASSEMBLER  MODOPS                                                               01/17/2023 14:46:39 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DONE . . . . . . .  C ADDR   015CH   A   
+HERE . . . . . . .  C ADDR   0106H   A   
+LOOPIT . . . . . .  C ADDR   0139H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+MODADD . . . . . .  C ADDR   0130H   A   
+MODSUB . . . . . .  C ADDR   015DH   A   
+NEG. . . . . . . .  C ADDR   017DH   A   
+NOCARRY. . . . . .  C ADDR   0155H   A   
+POS. . . . . . . .  C ADDR   0178H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

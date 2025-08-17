@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\StopWatch.obj" 
+TO ".\Objects\EventCount" 
+PRINT(".\Listings\EventCount.m51") RAMSIZE(256) 

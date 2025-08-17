@@ -1,0 +1,146 @@
+A51 MACRO ASSEMBLER  SAREGAMA                                                             02/07/2023 14:08:22 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\SaReGaMa.obj
+ASSEMBLER INVOKED BY: D:\Keil_v5\C51\BIN\A51.EXE SaReGaMa.asm SET(SMALL) DEBUG PRINT(.\Listings\SaReGaMa.lst) OBJECT(.\O
+                      bjects\SaReGaMa.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 316D              5     CALL play_notes
+                       6     
+                       7     
+0102 80FE              8     HERE: SJMP HERE
+0130                   9     ORG 130H
+                      10     
+0130                  11     delay_Ma:
+0130 C000             12     push 00h
+0132 78C0             13     mov r0, #192
+0134 3164             14     h6: acall delay_8us
+0136 D807             15     djnz r0, h5
+0138 D000             16     pop 00h
+013A 22               17     ret
+                      18     
+013B                  19     delay_Ga:
+013B C000             20     push 00h
+013D 78CC             21     mov r0, #204
+013F 3164             22     h5: acall delay_8us
+0141 D8FC             23     djnz r0, h5
+0143 D000             24     pop 00h
+0145 22               25     ret
+                      26     
+0146                  27     delay_Re:
+0146 C000             28     push 00h
+0148 78E4             29     mov r0, #228
+014A 3164             30     h4: acall delay_8us
+014C D8FC             31     djnz r0, h4
+014E D000             32     pop 00h
+0150 22               33     ret
+                      34     
+0151                  35     delay_Sa:
+0151 C000             36     push 00h
+0153 C004             37     push 04h
+0155 78FF             38     mov r0, #255
+0157 7C19             39     mov r4, #25
+0159 DCFE             40     addmoreSa : djnz r4, addmoreSa
+015B 3164             41     h3: acall delay_8us
+015D D8FC             42     djnz r0, h3
+015F D004             43     pop 04h
+0161 D000             44     pop 00h
+0163 22               45     ret
+                      46     
+                      47     
+                      48     
+0164                  49     delay_8us:
+0164 C000             50     push 00h
+0166 7802             51     mov r0, #2
+0168 D8FE             52     h1: djnz r0, h1
+016A D000             53     pop 00h
+016C 22               54     ret
+                      55     
+                      56     
+016D C3               57     play_notes : CLR C
+A51 MACRO ASSEMBLER  SAREGAMA                                                             02/07/2023 14:08:22 PAGE     2
+
+016E                  58     loop : 
+                      59     
+016E E590             60     MOV A, P1
+0170 F5F0             61     MOV B, A
+0172 540F             62     ANL A, #0FH
+0174 C3               63     CLR C
+0175 940F             64     SUBB A, #00001111B
+0177 7006             65     JNZ notMa
+0179 B287             66     CPL P0.7
+017B 3130             67     CALL delay_Ma
+017D 80EF             68     SJMP loop
+                      69     
+017F E5F0             70     notMa : MOV A,B
+0181 540F             71     ANL A, #0FH
+0183 C3               72     CLR C
+0184 9407             73     SUBB A, #00000111B
+0186 7006             74     JNZ notGa
+0188 B287             75     CPL P0.7
+018A 313B             76     CALL delay_Ga
+018C 80E0             77     SJMP loop
+                      78     
+018E E5F0             79     notGa : MOV A,B
+0190 540F             80     ANL A, #0FH
+0192 C3               81     CLR C
+0193 9403             82     SUBB A, #00000011B
+0195 7006             83     JNZ notRe
+0197 B287             84     CPL P0.7
+0199 3146             85     CALL delay_Re
+019B 80D1             86     SJMP loop
+                      87     
+019D E5F0             88     notRe : MOV A,B
+019F 540F             89     ANL A, #0FH
+01A1 C3               90     CLR C
+01A2 9401             91     SUBB A, #00000001B
+01A4 70F7             92     JNZ notRe
+01A6 B287             93     CPL P0.7
+01A8 3151             94     CALL delay_Sa
+01AA 80C2             95     SJMP loop
+                      96     
+                      97     
+                      98     
+                      99     END
+A51 MACRO ASSEMBLER  SAREGAMA                                                             02/07/2023 14:08:22 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ADDMORESA. . . . .  C ADDR   0159H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+DELAY_8US. . . . .  C ADDR   0164H   A   
+DELAY_GA . . . . .  C ADDR   013BH   A   
+DELAY_MA . . . . .  C ADDR   0130H   A   
+DELAY_RE . . . . .  C ADDR   0146H   A   
+DELAY_SA . . . . .  C ADDR   0151H   A   
+H1 . . . . . . . .  C ADDR   0168H   A   
+H3 . . . . . . . .  C ADDR   015BH   A   
+H4 . . . . . . . .  C ADDR   014AH   A   
+H5 . . . . . . . .  C ADDR   013FH   A   
+H6 . . . . . . . .  C ADDR   0134H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+LOOP . . . . . . .  C ADDR   016EH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+NOTGA. . . . . . .  C ADDR   018EH   A   
+NOTMA. . . . . . .  C ADDR   017FH   A   
+NOTRE. . . . . . .  C ADDR   019DH   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PLAY_NOTES . . . .  C ADDR   016DH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
